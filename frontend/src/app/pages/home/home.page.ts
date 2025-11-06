@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { CameraService } from '../services/camera.service';
+import { CameraService } from '../../services/camera.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
