@@ -14,4 +14,8 @@ export const routes: Routes = [
     path: 'capture',
     loadComponent: () => import('./pages/camera/camera.page').then(m => m.CameraPage),
   },
+  { 
+    path: 'profile', 
+    loadComponent: () => import('./pages/patient-profile/patient-profile.page').then(m => m.PatientProfilePage) 
+  }
 ];
