@@ -33,7 +33,7 @@ export class CameraService {
 
       const photo = await Camera.getPhoto({
         source: CameraSource.Camera,
-        resultType: CameraResultType.Uri, // best for native save/preview; switch to Base64 if you must inline
+        resultType: CameraResultType.DataUrl, // best for native save/preview; switch to Base64 if you must inline
         quality: 100,
         direction: CameraDirection.Rear,
         saveToGallery: false,
