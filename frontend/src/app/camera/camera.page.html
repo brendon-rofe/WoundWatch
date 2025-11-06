@@ -1,0 +1,63 @@
+<ion-content [fullscreen]="true" class="add-photo-page">
+    <div class="page-center">
+      <div class="card">
+  
+        <!-- Header -->
+        <div class="card-header">
+          <p class="title">Add New Wound Photo</p>
+          <p class="subtitle">Track your progress by adding a photo of your wound.</p>
+        </div>
+  
+        <!-- Segmented (Camera / Upload) -->
+        <div class="segmented-wrap">
+          <div class="segmented">
+            <label class="seg-item" [class.active]="mode==='camera'">
+              <span>Use Camera</span>
+              <input type="radio" name="src" [checked]="mode==='camera'" (change)="setMode('camera')" />
+            </label>
+            <label class="seg-item" [class.active]="mode==='upload'">
+              <span>Upload File</span>
+              <input type="radio" name="src" [checked]="mode==='upload'" (change)="setMode('upload')" />
+            </label>
+          </div>
+        </div>
+  
+        <!-- Preview box -->
+        <div class="preview-wrap">
+          <div id="previewBox" class="preview-box">
+            <!-- Web fallback video (only rendered on web + camera mode) -->
+            <video #webcam *ngIf="isWeb && mode==='camera'" class="webcam" autoplay playsinline muted></video>
+  
+            <!-- Upload mode -->
+            <label class="upload" *ngIf="mode==='upload'">
+              <input type="file" accept="image/*" (change)="onFile($event)" />
+              <ng-container *ngIf="!uploadPreview; else hasPreview">
+                <div class="upload-content">
+                  <p class="empty-title">Choose an image</p>
+                  <p class="empty-subtitle">Supported formats: JPG, PNG. Max size: 10MB.</p>
+                </div>
+              </ng-container>
+              <ng-template #hasPreview>
+                <img [src]="uploadPreview!" alt="Selected preview"/>
+              </ng-template>
+            </label>
+          </div>
+        </div>
+  
+        <!-- Shutter -->
+        <div class="controls" *ngIf="mode==='camera'">
+          <button class="shutter" (click)="shoot()" aria-label="Shutter">
+            <div class="inner"></div>
+          </button>
+        </div>
+  
+        <p class="meta">Supported formats: JPG, PNG. Max size: 10MB.</p>
+  
+        <!-- Actions -->
+        <div class="actions">
+          <button class="btn ghost" (click)="close()"><span>Cancel</span></button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  

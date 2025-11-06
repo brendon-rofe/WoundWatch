@@ -10,4 +10,8 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path: 'capture',
+    loadComponent: () => import('./camera/camera.page').then(m => m.CameraPage),
+  },
 ];
