@@ -1,0 +1,45 @@
+<ion-content [fullscreen]="true" class="wp-root">
+    <div class="page-center">
+      <div class="card">
+  
+        <!-- Header -->
+        <div class="card-header">
+          <div>
+            <p class="title">Your 5-Day Progress</p>
+            <p class="subtitle">Review your wound's healing journey over the last five days.</p>
+          </div>
+          <button class="btn ghost" routerLink="">
+            <span class="ms">arrow_back</span>
+            <span>Back to Home</span>
+          </button>
+        </div>
+  
+        <!-- Main image -->
+        <div class="main-wrap">
+          <div class="main-image">
+            <img [src]="selected.src" [alt]="selected?.alt" />
+            <div class="badge">{{ selected.badge }}</div>
+          </div>
+        </div>
+  
+        <!-- Thumbnails -->
+        <div class="thumbs">
+          <ng-container *ngFor="let d of days; trackBy: trackByDate">
+            <div class="thumb" [class.active]="d.date===selected.date" (click)="select(d)">
+              <ng-container *ngIf="d.src; else empty">
+                <img [src]="d.src" [alt]="d.alt" />
+              </ng-container>
+              <ng-template #empty>
+                <div class="thumb-empty">
+                  <span class="ms">image</span>
+                </div>
+              </ng-template>
+              <p class="thumb-label">{{ d.label }}</p>
+            </div>
+          </ng-container>
+        </div>
+  
+      </div>
+    </div>
+  </ion-content>
+  

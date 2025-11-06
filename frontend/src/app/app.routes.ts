@@ -17,5 +17,10 @@ export const routes: Routes = [
   { 
     path: 'profile', 
     loadComponent: () => import('./pages/patient-profile/patient-profile.page').then(m => m.PatientProfilePage) 
+  },
+  // app.routes.ts
+  { path: 'progress',
+    loadComponent: () => import('./pages/wound-progress/wound-progress.page').then(m => m.WoundProgressPage) 
   }
+
 ];
