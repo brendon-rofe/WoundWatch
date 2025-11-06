@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { CameraService } from '../services/camera.service';
 
 @Component({
   selector: 'app-home',
@@ -10,19 +11,17 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
   imports: [IonContent],
 })
 export class HomePage {
-  constructor() {}
+  constructor(private camera: CameraService) {}
 
   async onUpload() {
-    try {
-      const photo = await Camera.getPhoto({
-        source: CameraSource.Camera,
-        resultType: CameraResultType.Uri,
-        quality: 100,
-      });
-      console.log('Captured:', photo?.webPath);
-      // TODO: navigate to a confirm/save screen
-    } catch (e) {
-      console.warn('Camera cancelled or failed', e);
+    const { photo, cancelled } = await this.camera.capture()
+
+    if (cancelled) {
+      console.log('User cancelled camera');
+      return;
     }
+
+    console.log('Captured webPath:', photo?.webPath);
+    // TODO: navigate to confirm/save screen, or pass `photo` to a storage service
   }
 }
