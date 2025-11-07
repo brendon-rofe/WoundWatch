@@ -14,24 +14,32 @@
           </button>
         </div>
   
-        <!-- Main image -->
         <div class="main-wrap" *ngIf="selected as s; else loading">
           <div class="main-image">
-            <img [src]="s.src" [alt]="s.alt" />
+            <ng-container *ngIf="s.src; else emptyMain">
+              <img [src]="s.src" [alt]="s.alt" />
+            </ng-container>
+        
+            <ng-template #emptyMain>
+              <div class="thumb-empty" style="width:100%;aspect-ratio:4/3;">
+                <span class="ms">image</span>
+              </div>
+            </ng-template>
+        
             <div class="badge">{{ s.badge }}</div>
           </div>
         </div>
-
+        
         <ng-template #loading>
           <div class="main-wrap">
             <div class="main-image">
-              <!-- simple skeleton -->
-              <div style="aspect-ratio:4/3;width:100%;max-width:720px;background:linear-gradient(90deg,#222,#2c2c2e,#222);animation:pulse 1.2s linear infinite;"></div>
+              <div style="aspect-ratio:4/3;width:100%;max-width:720px;background:#222;border-radius:10px;display:grid;place-items:center;">
+                <span class="ms">hourglass_empty</span>
+              </div>
             </div>
           </div>
         </ng-template>
   
-        <!-- Thumbnails -->
         <div class="thumbs" *ngIf="days?.length; else noThumbs">
           <ng-container *ngFor="let d of days; trackBy: trackByDate">
             <div class="thumb" [class.active]="selected && d.date===selected.date" (click)="select(d)">
