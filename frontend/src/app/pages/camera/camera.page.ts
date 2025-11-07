@@ -1,3 +1,6 @@
+// top of file
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
@@ -49,6 +52,26 @@ export class CameraPage implements OnInit, OnDestroy {
       await this.stopNativePreview();
     }
   }
+
+  private async saveToFilesystem(dataUrl: string): Promise<string> {
+    const base64 = dataUrl.split(',')[1]; // strip "data:image/jpeg;base64,"
+    const fileName = `photos/photo_${Date.now()}.jpg`;
+    const { uri } = await Filesystem.writeFile({
+      path: fileName,
+      data: base64,
+      directory: Directory.Data, // app-private storage
+      recursive: true,
+    });
+    // Optionally keep a simple index of saved photos
+    try {
+      const listRaw = localStorage.getItem('saved_photos') ?? '[]';
+      const list = JSON.parse(listRaw) as string[];
+      list.unshift(uri);
+      localStorage.setItem('saved_photos', JSON.stringify(list.slice(0, 200)));
+    } catch {}
+    return uri; // e.g. capacitor://… on native, or internal id on web
+  }
+  
 
   /* ------------ Mode switching ------------ */
   async setMode(mode: 'camera' | 'upload') {
@@ -118,27 +141,35 @@ export class CameraPage implements OnInit, OnDestroy {
   async shoot() {
     try {
       let dataUrl: string;
-
-      if (this.isWeb && this.mode === 'camera' && this.webcamRef?.nativeElement) {
-        const video = this.webcamRef.nativeElement;
+  
+      if (this.mode === 'upload') {
+        if (!this.uploadPreview) return console.warn('No file uploaded');
+        dataUrl = this.uploadPreview;
+      } else if (this.isWeb && this.mode === 'camera') {
+        const video = this.webcamRef?.nativeElement;
+        if (!video || video.readyState !== video.HAVE_ENOUGH_DATA) return console.warn('Video not ready');
         const canvas = document.createElement('canvas');
         canvas.width = video.videoWidth || 1280;
         canvas.height = video.videoHeight || 720;
-        const ctx = canvas.getContext('2d')!;
+        const ctx = canvas.getContext('2d'); if (!ctx) return console.warn('No ctx');
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         dataUrl = canvas.toDataURL('image/jpeg', 0.95);
       } else {
-        const pic = await CameraPreview.capture({ quality: 95 } as CameraPreviewPictureOptions);
+        // Native camera-preview capture
+        const pic = await CameraPreview.capture({ quality: 95 });
         dataUrl = 'data:image/jpeg;base64,' + pic.value;
       }
-
-      console.log('Captured image data URL length:', dataUrl.length);
-      // TODO: navigate to confirm/save page with { state: { dataUrl } }
+  
+      const uri = await this.saveToFilesystem(dataUrl);
+      console.log('Saved to:', uri);
+  
+      // TODO: navigate to a confirm/gallery page; pass the uri if you like
       this.close();
     } catch (e) {
       console.warn('Capture failed:', e);
     }
   }
+  
 
   /* ------------ Upload ------------ */
   uploadPreview: string | null = null;
