@@ -50,9 +50,12 @@ export class CameraPage implements OnInit, OnDestroy {
     }
   }
 
-  private async saveToFilesystem(dataUrl: string): Promise<string> {
-    const base64 = dataUrl.split(',')[1]; // strip "data:image/jpeg;base64,"
-    const fileName = `photos/photo_${Date.now()}.jpg`;
+  // wherever you save:
+  private async saveToFilesystem(dataUrl: string): Promise<{ uri: string; path: string; ts: number }> {
+    const base64 = dataUrl.split(',')[1];
+    const ts = Date.now();
+    const fileName = `photos/photo_${ts}.jpg`;
+
     const { uri } = await Filesystem.writeFile({
       path: fileName,
       data: base64,
@@ -60,14 +63,15 @@ export class CameraPage implements OnInit, OnDestroy {
       recursive: true,
     });
 
-    try {
-      const listRaw = localStorage.getItem('saved_photos') ?? '[]';
-      const list = JSON.parse(listRaw) as string[];
-      list.unshift(uri);
-      localStorage.setItem('saved_photos', JSON.stringify(list.slice(0, 200)));
-    } catch {}
-    return uri;
+    // keep an index
+    const entry = { uri, path: fileName, ts };
+    const raw = localStorage.getItem('saved_photos') ?? '[]';
+    const list = JSON.parse(raw) as Array<{ uri: string; path: string; ts: number }>;
+    list.unshift(entry);
+    localStorage.setItem('saved_photos', JSON.stringify(list.slice(0, 200)));
+    return entry;
   }
+
   
 
   async setMode(mode: 'camera' | 'upload') {
