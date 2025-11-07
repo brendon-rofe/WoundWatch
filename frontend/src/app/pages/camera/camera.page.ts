@@ -50,7 +50,6 @@ export class CameraPage implements OnInit, OnDestroy {
     }
   }
 
-  // wherever you save:
   private async saveToFilesystem(dataUrl: string): Promise<{ uri: string; path: string; ts: number }> {
     const base64 = dataUrl.split(',')[1];
     const ts = Date.now();
@@ -63,7 +62,6 @@ export class CameraPage implements OnInit, OnDestroy {
       recursive: true,
     });
 
-    // keep an index
     const entry = { uri, path: fileName, ts };
     const raw = localStorage.getItem('saved_photos') ?? '[]';
     const list = JSON.parse(raw) as Array<{ uri: string; path: string; ts: number }>;
