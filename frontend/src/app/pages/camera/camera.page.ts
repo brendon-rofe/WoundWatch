@@ -1,4 +1,3 @@
-// top of file
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
@@ -7,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 
-/** Native plugin */
 import {
   CameraPreview,
   CameraPreviewOptions,
@@ -32,7 +30,6 @@ export class CameraPage implements OnInit, OnDestroy {
 
   constructor(private router: Router) {}
 
-  /* ------------ Lifecycle ------------ */
   async ngOnInit() {
     if (this.mode === 'camera') {
       if (this.isWeb) await this.startWebcam();
@@ -59,21 +56,20 @@ export class CameraPage implements OnInit, OnDestroy {
     const { uri } = await Filesystem.writeFile({
       path: fileName,
       data: base64,
-      directory: Directory.Data, // app-private storage
+      directory: Directory.Data,
       recursive: true,
     });
-    // Optionally keep a simple index of saved photos
+
     try {
       const listRaw = localStorage.getItem('saved_photos') ?? '[]';
       const list = JSON.parse(listRaw) as string[];
       list.unshift(uri);
       localStorage.setItem('saved_photos', JSON.stringify(list.slice(0, 200)));
     } catch {}
-    return uri; // e.g. capacitor://… on native, or internal id on web
+    return uri;
   }
   
 
-  /* ------------ Mode switching ------------ */
   async setMode(mode: 'camera' | 'upload') {
     this.mode = mode;
     if (mode === 'camera') {
@@ -85,7 +81,6 @@ export class CameraPage implements OnInit, OnDestroy {
     }
   }
 
-  /* ------------ Web fallback ------------ */
   private async startWebcam() {
     try {
       this.stopWebcam();
@@ -107,7 +102,6 @@ export class CameraPage implements OnInit, OnDestroy {
     this.webStream = undefined;
   }
 
-  /* ------------ Native preview (Android/iOS) ------------ */
   private async startNativePreview(restart = false) {
     try {
       if (restart) await this.stopNativePreview();
@@ -137,7 +131,6 @@ export class CameraPage implements OnInit, OnDestroy {
     try { await CameraPreview.stop(); } catch {}
   }
 
-  /* ------------ Capture ------------ */
   async shoot() {
     try {
       let dataUrl: string;
@@ -163,7 +156,6 @@ export class CameraPage implements OnInit, OnDestroy {
       const uri = await this.saveToFilesystem(dataUrl);
       console.log('Saved to:', uri);
   
-      // TODO: navigate to a confirm/gallery page; pass the uri if you like
       this.close();
     } catch (e) {
       console.warn('Capture failed:', e);
@@ -171,7 +163,6 @@ export class CameraPage implements OnInit, OnDestroy {
   }
   
 
-  /* ------------ Upload ------------ */
   uploadPreview: string | null = null;
   onFile(evt: Event) {
     const input = evt.target as HTMLInputElement;
@@ -182,6 +173,5 @@ export class CameraPage implements OnInit, OnDestroy {
     reader.readAsDataURL(file);
   }
 
-  /* ------------ Nav ------------ */
   close() { this.router.navigateByUrl('/'); }
 }
