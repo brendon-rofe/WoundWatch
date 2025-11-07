@@ -25,9 +25,8 @@
         <!-- Preview box -->
         <div class="preview-wrap">
           <div id="previewBox" class="preview-box">
-            <!-- Web fallback video (only rendered on web + camera mode) -->
             <video #webcam *ngIf="isWeb && mode==='camera'" class="webcam" autoplay playsinline muted></video>
-  
+        
             <!-- Upload mode -->
             <label class="upload" *ngIf="mode==='upload'">
               <input type="file" accept="image/*" (change)="onFile($event)" />
@@ -41,12 +40,18 @@
                 <img [src]="uploadPreview!" alt="Selected preview"/>
               </ng-template>
             </label>
+        
+            <!-- ✅ Capture banner -->
+            <div class="capture-banner" *ngIf="captured" aria-live="polite">
+              <ion-icon name="checkmark-circle" class="icon"></ion-icon>
+              <span>Image captured</span>
+            </div>
           </div>
         </div>
   
         <!-- Shutter -->
         <div class="controls" *ngIf="mode==='camera'">
-          <button class="shutter" (click)="shoot()" aria-label="Shutter">
+          <button class="shutter" (click)="shoot()" [disabled]="saving" aria-label="Shutter">
             <div class="inner"></div>
           </button>
         </div>

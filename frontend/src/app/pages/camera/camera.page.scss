@@ -86,6 +86,30 @@
     position: relative;
     overflow: hidden;
   }
+
+  .capture-banner {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    gap: 8px;
+    font-weight: 800;
+    letter-spacing: .02em;
+    text-transform: none;
+    color: var(--text-primary);
+    animation: capFade .25s ease-out;
+  
+    .ms { font-size: 28px; opacity: 0.9; }
+  }
+
+  .capture-banner .icon { font-size: 28px; opacity: .9; }
+
+  @keyframes capFade {
+    from { opacity: 0; transform: scale(0.98); }
+    to   { opacity: 1; transform: scale(1); }
+  }
   
   /* Web <video> */
   .webcam {

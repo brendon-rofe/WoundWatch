@@ -1,10 +1,12 @@
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { IonContent } from '@ionic/angular/standalone';
+import { IonContent, IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
+import { addIcons } from 'ionicons';
+import { checkmarkCircle } from 'ionicons/icons';
 
 import {
   CameraPreview,
@@ -17,18 +19,22 @@ import {
   templateUrl: './camera.page.html',
   styleUrls: ['./camera.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule],
+  imports: [IonContent, CommonModule, IonIcon],
 })
 export class CameraPage implements OnInit, OnDestroy {
   mode: 'camera' | 'upload' = 'camera';
   isWeb = Capacitor.getPlatform() === 'web';
+  captured = false;
+  saving = false;
 
   @ViewChild('webcam') webcamRef?: ElementRef<HTMLVideoElement>;
   private webStream?: MediaStream;
 
   private onReflow = () => { if (!this.isWeb && this.mode==='camera') this.startNativePreview(); };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    addIcons({ checkmarkCircle });
+  }
 
   async ngOnInit() {
     if (this.mode === 'camera') {
@@ -74,6 +80,7 @@ export class CameraPage implements OnInit, OnDestroy {
 
   async setMode(mode: 'camera' | 'upload') {
     this.mode = mode;
+    this.captured = false;
     if (mode === 'camera') {
       if (this.isWeb) await this.startWebcam();
       else await this.startNativePreview(true);
@@ -157,8 +164,7 @@ export class CameraPage implements OnInit, OnDestroy {
   
       const uri = await this.saveToFilesystem(dataUrl);
       console.log('Saved to:', uri);
-  
-      this.close();
+      this.captured = true;
     } catch (e) {
       console.warn('Capture failed:', e);
     }
