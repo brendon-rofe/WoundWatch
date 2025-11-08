@@ -161,7 +161,20 @@
     background: rgba(0,0,0,.2);
     border-radius: 0 0 12px 12px;
     justify-content: flex-end;
+    flex-wrap: wrap;
   }
+  
+  .actions .btn {
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: .02em;
+    cursor: pointer;
+    border: none;
+  }
+  
   .btn {
     height: 40px; padding: 0 16px;
     border-radius: 10px;

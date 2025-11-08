@@ -49,8 +49,8 @@
           </div>
         </div>
   
-        <!-- Shutter -->
-        <div class="controls" *ngIf="mode==='camera'">
+        <!-- Controls -->
+        <div class="controls" *ngIf="mode==='camera' && !captured">
           <button class="shutter" (click)="shoot()" [disabled]="saving" aria-label="Shutter">
             <div class="inner"></div>
           </button>
@@ -61,6 +61,9 @@
         <!-- Actions -->
         <div class="actions">
           <button class="btn ghost" (click)="close()"><span>Cancel</span></button>
+          <button class="btn ghost" routerLink="" *ngIf="captured">
+            <span>Back to Home</span>
+          </button>
         </div>
       </div>
     </div>

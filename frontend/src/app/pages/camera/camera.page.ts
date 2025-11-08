@@ -3,7 +3,7 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IonContent, IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 import { addIcons } from 'ionicons';
 import { checkmarkCircle } from 'ionicons/icons';
@@ -19,7 +19,7 @@ import {
   templateUrl: './camera.page.html',
   styleUrls: ['./camera.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, IonIcon],
+  imports: [IonContent, CommonModule, IonIcon, RouterLink],
 })
 export class CameraPage implements OnInit, OnDestroy {
   mode: 'camera' | 'upload' = 'camera';
