@@ -29,7 +29,6 @@
               <video #webcam class="webcam" autoplay playsinline muted></video>
             }
         
-            <!-- Upload mode -->
             @if (mode==='upload') {
               <label class="upload">
                 <input type="file" accept="image/*" (change)="onFile($event)" />
@@ -39,7 +38,7 @@
                     <p class="empty-subtitle">Supported formats: JPG, PNG. Max size: 10MB.</p>
                   </div>
                 } @else {
-                  <img [src]="uploadPreview!" alt="Selected preview"/>
+                  <img [src]="uploadPreview!" alt="Selected preview" />
                 }
               </label>
             }
@@ -50,12 +49,17 @@
                 <ion-icon name="checkmark-circle" class="icon"></ion-icon>
                 <span>Image captured</span>
               </div>
+            } @else if (alreadyCapturedToday) {
+              <div class="capture-banner" aria-live="polite">
+                <ion-icon name="checkmark-circle" class="icon"></ion-icon>
+                <span>Image already captured for the day</span>
+              </div>
             }
           </div>
         </div>
   
         <!-- Controls -->
-        @if (mode==='camera' && !captured) {
+        @if (mode==='camera' && !captured && !alreadyCapturedToday) {
           <div class="controls">
             <button class="shutter" (click)="shoot()" [disabled]="saving" aria-label="Shutter">
               <div class="inner"></div>

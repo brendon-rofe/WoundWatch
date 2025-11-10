@@ -56,6 +56,31 @@ export class CameraPage implements OnInit, OnDestroy {
     }
   }
 
+  private hasPhotoToday(): boolean {
+    const raw = localStorage.getItem('saved_photos');
+    if (!raw) return false;
+  
+    try {
+      const list = JSON.parse(raw) as Array<{ ts: number }>;
+      const startOfToday = new Date();
+      startOfToday.setHours(0, 0, 0, 0);
+      const endOfToday = new Date();
+      endOfToday.setHours(23, 59, 59, 999);
+  
+      return list.some(entry => {
+        const date = new Date(entry.ts);
+        return date >= startOfToday && date <= endOfToday;
+      });
+    } catch {
+      return false;
+    }
+  }
+
+  get alreadyCapturedToday(): boolean {
+    return this.hasPhotoToday();
+  }
+  
+
   private async saveToFilesystem(dataUrl: string): Promise<{ uri: string; path: string; ts: number }> {
     const base64 = dataUrl.split(',')[1];
     const ts = Date.now();
