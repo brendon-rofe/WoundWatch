@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { IonContent } from '@ionic/angular/standalone';
+import { IonContent, IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor } from '@capacitor/core';
+import { addIcons } from 'ionicons';
+import { trashBin } from 'ionicons/icons';
 
 type GalleryIndexItem = { uri: string; path: string; ts: number };
 type DayItem = {
@@ -12,6 +14,7 @@ type DayItem = {
   badge: string;
   src: string | null;
   alt: string;
+  path?: string;
 };
 
 @Component({
@@ -19,14 +22,54 @@ type DayItem = {
   standalone: true,
   templateUrl: './wound-progress.page.html',
   styleUrls: ['./wound-progress.page.scss'],
-  imports: [IonContent, CommonModule, RouterLink],
+  imports: [IonContent, CommonModule, RouterLink, IonIcon],
 })
 export class WoundProgressPage implements OnInit {
   days: DayItem[] = [];
   selected!: DayItem;
 
+  constructor() {
+    addIcons({ trashBin })
+  }
+
   async ngOnInit() {
     await this.loadSavedPhotos();
+  }
+
+  private async deleteFromFilesystem(path: string): Promise<boolean> {
+    try {
+      // Remove the physical file
+      await Filesystem.deleteFile({
+        path,
+        directory: Directory.Data,
+      });
+  
+      // Update the localStorage index
+      const raw = localStorage.getItem('saved_photos');
+      if (!raw) return true;
+  
+      const list = JSON.parse(raw) as Array<{ uri: string; path: string; ts: number }>;
+      const updated = list.filter(item => item.path !== path);
+      localStorage.setItem('saved_photos', JSON.stringify(updated));
+  
+      console.log(`Deleted photo: ${path}`);
+      return true;
+    } catch (err) {
+      console.warn('Failed to delete photo:', err);
+      return false;
+    }
+  }
+
+  async deleteDayItem(d: DayItem, ev?: Event) {
+    ev?.stopPropagation();
+    if (!d.path) return;
+  
+    const ok = await this.deleteFromFilesystem(d.path);
+    if (ok) {
+      // If we just removed the selected item, clear selection before reload
+      if (this.selected?.path === d.path) this.selected = undefined as any;
+      await this.loadSavedPhotos();
+    }
   }
 
   private getSavedIndex(): GalleryIndexItem[] {
@@ -100,6 +143,7 @@ export class WoundProgressPage implements OnInit {
           badge: this.fmtBadge(date),
           src,
           alt: `Wound on ${date.toDateString()}`,
+          path: it.path,
         };
       })
     );

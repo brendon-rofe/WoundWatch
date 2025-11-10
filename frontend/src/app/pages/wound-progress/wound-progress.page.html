@@ -40,7 +40,7 @@
   
         @if (days && days.length) {
           <div class="thumbs">
-            <ng-container *ngFor="let d of days; trackBy: trackByDate">
+            @for (d of days; track d.date) {
               <div class="thumb" [class.active]="selected && d.date===selected.date" (click)="select(d)">
                 @if (d.src) {
                   <img [src]="d.src" [alt]="d.alt" />
@@ -48,8 +48,16 @@
                   <div class="thumb-empty"><span class="ms">image</span></div>
                 }
                 <p class="thumb-label">{{ d.label }}</p>
+        
+                <!-- Delete action -->
+                @if (d.src && d.path) {
+                  <button class="icon-button" title="Delete photo"
+                          (click)="deleteDayItem(d, $event)">
+                    <ion-icon name="trash-bin" class="icon"></ion-icon>
+                  </button>
+                }
               </div>
-            </ng-container>
+            }
           </div>
         } @else {
           <div class="thumbs"><p class="thumb-label">No images yet</p></div>
