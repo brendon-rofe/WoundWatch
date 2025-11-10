@@ -25,45 +25,54 @@
         <!-- Preview box -->
         <div class="preview-wrap">
           <div id="previewBox" class="preview-box">
-            <video #webcam *ngIf="isWeb && mode==='camera'" class="webcam" autoplay playsinline muted></video>
+            @if (isWeb && mode==='camera') {
+              <video #webcam class="webcam" autoplay playsinline muted></video>
+            }
         
             <!-- Upload mode -->
-            <label class="upload" *ngIf="mode==='upload'">
-              <input type="file" accept="image/*" (change)="onFile($event)" />
-              <ng-container *ngIf="!uploadPreview; else hasPreview">
-                <div class="upload-content">
-                  <p class="empty-title">Choose an image</p>
-                  <p class="empty-subtitle">Supported formats: JPG, PNG. Max size: 10MB.</p>
-                </div>
-              </ng-container>
-              <ng-template #hasPreview>
-                <img [src]="uploadPreview!" alt="Selected preview"/>
-              </ng-template>
-            </label>
+            @if (mode==='upload') {
+              <label class="upload">
+                <input type="file" accept="image/*" (change)="onFile($event)" />
+                @if (!uploadPreview) {
+                  <div class="upload-content">
+                    <p class="empty-title">Choose an image</p>
+                    <p class="empty-subtitle">Supported formats: JPG, PNG. Max size: 10MB.</p>
+                  </div>
+                } @else {
+                  <img [src]="uploadPreview!" alt="Selected preview"/>
+                }
+              </label>
+            }
         
             <!-- ✅ Capture banner -->
-            <div class="capture-banner" *ngIf="captured" aria-live="polite">
-              <ion-icon name="checkmark-circle" class="icon"></ion-icon>
-              <span>Image captured</span>
-            </div>
+            @if (captured) {
+              <div class="capture-banner" aria-live="polite">
+                <ion-icon name="checkmark-circle" class="icon"></ion-icon>
+                <span>Image captured</span>
+              </div>
+            }
           </div>
         </div>
   
         <!-- Controls -->
-        <div class="controls" *ngIf="mode==='camera' && !captured">
-          <button class="shutter" (click)="shoot()" [disabled]="saving" aria-label="Shutter">
-            <div class="inner"></div>
-          </button>
-        </div>
+        @if (mode==='camera' && !captured) {
+          <div class="controls">
+            <button class="shutter" (click)="shoot()" [disabled]="saving" aria-label="Shutter">
+              <div class="inner"></div>
+            </button>
+          </div>
+        }
   
         <p class="meta">Supported formats: JPG, PNG. Max size: 10MB.</p>
   
         <!-- Actions -->
         <div class="actions">
           <button class="btn ghost" (click)="close()"><span>Cancel</span></button>
-          <button class="btn ghost" routerLink="" *ngIf="captured">
-            <span>Back to Home</span>
-          </button>
+          @if (captured) {
+            <button class="btn ghost" routerLink="">
+              <span>Back to Home</span>
+            </button>
+          }
         </div>
       </div>
     </div>

@@ -14,23 +14,21 @@
           </button>
         </div>
   
-        <div class="main-wrap" *ngIf="selected as s; else loading">
-          <div class="main-image">
-            <ng-container *ngIf="s.src; else emptyMain">
-              <img [src]="s.src" [alt]="s.alt" />
-            </ng-container>
+        @if (selected) {
+          <div class="main-wrap">
+            <div class="main-image">
+              @if (selected.src) {
+                <img [src]="selected.src" [alt]="selected.alt" />
+              } @else {
+                <div class="thumb-empty" style="width:100%;aspect-ratio:4/3;">
+                  <span class="ms">image</span>
+                </div>
+              }
         
-            <ng-template #emptyMain>
-              <div class="thumb-empty" style="width:100%;aspect-ratio:4/3;">
-                <span class="ms">image</span>
-              </div>
-            </ng-template>
-        
-            <div class="badge">{{ s.badge }}</div>
+              <div class="badge">{{ selected.badge }}</div>
+            </div>
           </div>
-        </div>
-        
-        <ng-template #loading>
+        } @else {
           <div class="main-wrap">
             <div class="main-image">
               <div style="aspect-ratio:4/3;width:100%;max-width:720px;background:#222;border-radius:10px;display:grid;place-items:center;">
@@ -38,25 +36,24 @@
               </div>
             </div>
           </div>
-        </ng-template>
+        }
   
-        <div class="thumbs" *ngIf="days?.length; else noThumbs">
-          <ng-container *ngFor="let d of days; trackBy: trackByDate">
-            <div class="thumb" [class.active]="selected && d.date===selected.date" (click)="select(d)">
-              <ng-container *ngIf="d.src; else empty">
-                <img [src]="d.src" [alt]="d.alt" />
-              </ng-container>
-              <ng-template #empty>
-                <div class="thumb-empty"><span class="ms">image</span></div>
-              </ng-template>
-              <p class="thumb-label">{{ d.label }}</p>
-            </div>
-          </ng-container>
-        </div>
-        
-        <ng-template #noThumbs>
+        @if (days && days.length) {
+          <div class="thumbs">
+            <ng-container *ngFor="let d of days; trackBy: trackByDate">
+              <div class="thumb" [class.active]="selected && d.date===selected.date" (click)="select(d)">
+                @if (d.src) {
+                  <img [src]="d.src" [alt]="d.alt" />
+                } @else {
+                  <div class="thumb-empty"><span class="ms">image</span></div>
+                }
+                <p class="thumb-label">{{ d.label }}</p>
+              </div>
+            </ng-container>
+          </div>
+        } @else {
           <div class="thumbs"><p class="thumb-label">No images yet</p></div>
-        </ng-template>
+        }
   
       </div>
     </div>
