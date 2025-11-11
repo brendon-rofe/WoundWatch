@@ -14,6 +14,13 @@
       </div>
 
       <div class="actions">
+        <span class="material-symbols-outlined" aria-hidden="true">light_mode</span>
+        <ion-toggle
+          aria-label="Toggle dark mode"
+          [checked]="isDark"
+          (ionChange)="onThemeToggle($event.detail.checked)">
+        </ion-toggle>
+        <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
         <button class="icon-btn" aria-label="Settings">
           <span class="material-symbols-outlined">settings</span>
         </button>
