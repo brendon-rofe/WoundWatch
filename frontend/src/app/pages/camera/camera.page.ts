@@ -10,7 +10,6 @@ import { checkmarkCircle } from 'ionicons/icons';
 import {
   CameraPreview,
   CameraPreviewOptions,
-  CameraPreviewPictureOptions,
 } from '@capacitor-community/camera-preview';
 
 @Component({
