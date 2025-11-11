@@ -1,4 +1,3 @@
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IonContent, IonIcon } from '@ionic/angular/standalone';
