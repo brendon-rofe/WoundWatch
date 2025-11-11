@@ -35,3 +35,74 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 @import "@ionic/angular/css/palettes/dark.class.css";
 /* @import '@ionic/angular/css/palettes/dark.system.css'; */
+
+/* ----------------------------------------------------------------------------
+ * App theme tokens (Light/Dark via .dark class)
+ * These variables are used across all pages to support theme toggling.
+ * ---------------------------------------------------------------------------- */
+
+:root {
+  /* Brand */
+  --ww-primary: #137fec;
+
+  /* Surfaces */
+  --ww-bg: #f6f7f8;            /* background-light */
+  --ww-surface: #ffffff;       /* cards, elevated blocks */
+
+  /* Typography */
+  --ww-text-primary: #101922;  /* text-primary */
+  --ww-text-secondary: #6b7280;/* text-secondary */
+
+  /* Borders / dividers */
+  --ww-border: #e5e7eb;
+  --ww-border-muted: #eef0f3;
+
+  /* Shape */
+  --ww-radius: 12px;
+
+  /* Map to Ionic CSS variables */
+  --ion-background-color: var(--ww-bg);
+  --ion-text-color: var(--ww-text-primary);
+
+  --ion-color-primary: var(--ww-primary);
+  --ion-color-primary-rgb: 19, 127, 236;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #1172d4;
+  --ion-color-primary-tint: #3693ee;
+}
+
+/* Support multiple dark selectors: apply vars when any of these are present */
+:root.dark,
+html.dark,
+body.dark,
+.dark,
+[data-theme='dark'],
+.ion-palette-dark {
+  /* Brand remains the same for now */
+  --ww-primary: #137fec;
+
+  /* Surfaces */
+  --ww-bg: #101922;           /* background-dark */
+  --ww-surface: #16202a;      /* darker card surface */
+
+  /* Typography */
+  --ww-text-primary: #f8fafc;
+  --ww-text-secondary: rgba(248, 250, 252, 0.65);
+
+  /* Borders */
+  --ww-border: rgba(248, 250, 252, 0.12);
+  --ww-border-muted: rgba(248, 250, 252, 0.06);
+
+  /* Ionic mappings in dark */
+  --ion-background-color: var(--ww-bg);
+  --ion-text-color: var(--ww-text-primary);
+  --ion-color-primary: var(--ww-primary);
+}
+
+/* Global font family to match mock */
+body, html, ion-app, ion-content {
+  font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  color: var(--ww-text-primary);
+  background: var(--ion-background-color);
+}

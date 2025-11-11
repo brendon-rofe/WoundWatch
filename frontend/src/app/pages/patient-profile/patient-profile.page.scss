@@ -1,22 +1,7 @@
 .profile-root {
-    /* Palette from your mock */
-    --primary: #4A90E2;
-    --bg-light: #F4F7F9;
-    --bg-dark: #101922;
-    --text: #F4F7F9;
-    --text-dark: #333333;
-    --muted: #8A94A6;
-    --border-light: #e7edf3;
-    --border-dark: #2a3b4e;
-    --card-light: #ffffff;
-    --card-dark: #1c2a38;
-    --success: #28a745;
-    --warning: #ffc107;
-    --danger: #dc3545;
-  
-    --ion-background-color: var(--bg-dark);
-    color: var(--text);
-  
+    /* Use global tokens */
+    --ion-background-color: var(--ww-bg);
+    color: var(--ww-text-primary);
     font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   }
   
@@ -27,10 +12,10 @@
   .topbar {
     display: flex; align-items: center; justify-content: space-between;
     padding: 12px 16px;
-    border-bottom: 1px solid var(--border-dark);
+    border-bottom: 1px solid var(--ww-border);
   }
-  .brand { display: flex; align-items: center; gap: 12px; color: var(--text); }
-  .logo { width: 24px; height: 24px; color: var(--primary); }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--ww-text-primary); }
+  .logo { width: 24px; height: 24px; color: var(--ww-primary); }
   .logo svg { display: block; fill: currentColor; }
   .brand-title { font-weight: 700; font-size: 18px; letter-spacing: -0.015em; }
   
@@ -42,19 +27,19 @@
     font-size: 20px;
   }
   .ms.big { font-size: 28px; }
-  .ms.muted { color: var(--muted); }
-  .ms.primary { color: var(--primary); }
-  .ms.success { color: var(--success); }
-  .ms.warning { color: var(--warning); }
-  .ms.danger  { color: var(--danger); }
+  .ms.muted { color: var(--ww-text-secondary); }
+  .ms.primary { color: var(--ww-primary); }
+  .ms.success { color: #28a745; }
+  .ms.warning { color: #ffc107; }
+  .ms.danger  { color: #dc3545; }
   
   .switch {
     position: relative; width: 44px; height: 24px; border-radius: 999px;
-    background: rgba(255,255,255,.15); border: 2px solid transparent;
+    background: color-mix(in srgb, var(--ww-text-secondary) 15%, transparent); border: 2px solid transparent;
   }
   .switch .knob {
     position: absolute; top: 50%; transform: translate(4px, -50%);
-    width: 18px; height: 18px; border-radius: 50%; background: var(--bg-dark);
+    width: 18px; height: 18px; border-radius: 50%; background: var(--ww-bg);
   }
   
   .btn {
@@ -63,18 +48,18 @@
     font-weight: 800; font-size: 14px; letter-spacing: .015em;
     border: none; cursor: pointer; transition: background .15s ease;
   }
-  .btn.primary { background: var(--primary); color: #fff; }
+  .btn.primary { background: var(--ww-primary); color: #fff; }
   .btn.primary:hover { background: #3a7cd0; }
-  .btn.outline { background: rgba(74,144,226,.2); color: var(--primary); }
+  .btn.outline { background: rgba(74,144,226,.2); color: var(--ww-primary); }
   .btn.outline:hover { background: rgba(74,144,226,.3); }
   .btn.full { width: 100%; }
   
   .btn.ghost {
-    background: rgba(255,255,255,.1);
-    color: var(--text);
+    background: color-mix(in srgb, var(--ww-text-secondary) 12%, transparent);
+    color: var(--ww-text-primary);
   }
   .btn.ghost:hover {
-    background: rgba(255,255,255,.2);
+    background: color-mix(in srgb, var(--ww-text-secondary) 20%, transparent);
   }  
 
   .avatar {
@@ -87,7 +72,7 @@
   .greeting-text .title {
     margin: 0 0 6px; font-size: clamp(28px, 4vw, 40px); font-weight: 900; letter-spacing: -0.03em;
   }
-  .greeting-text .subtitle { margin: 0; color: var(--muted); }
+  .greeting-text .subtitle { margin: 0; color: var(--ww-text-secondary); }
   
   /* Grid */
   .grid {
@@ -100,8 +85,8 @@
   
   /* Cards */
   .card {
-    background: var(--card-dark);
-    border: 1px solid var(--border-dark);
+    background: var(--ww-surface);
+    border: 1px solid var(--ww-border);
     border-radius: 12px;
     padding: 24px;
     box-shadow: 0 6px 24px rgba(0,0,0,.25);
@@ -120,7 +105,7 @@
     aspect-ratio: 1 / 1; border-radius: 10px;
     background: center/cover no-repeat; background-image: var(--img);
   }
-  .status-details .muted { color: var(--muted); }
+  .status-details .muted { color: var(--ww-text-secondary); }
   .small { font-size: 12px; margin: 0 0 10px; }
   .bullet { display: flex; align-items: center; gap: 10px; margin: 10px 0; }
   .bullet p { margin: 0; }
@@ -141,15 +126,7 @@
     background: rgba(74,144,226,.15); display: grid; place-items: center;
   }
   .res-title { margin: 0; font-weight: 800; }
-  .res-sub { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
-  .resource:hover .res-title { color: var(--primary); }
+  .res-sub { margin: 2px 0 0; color: var(--ww-text-secondary); font-size: 14px; }
+  .resource:hover .res-title { color: var(--ww-primary); }
   
-  /* Light mode quick support (optional) */
-  :root.light .profile-root {
-    --ion-background-color: var(--bg-light);
-    color: var(--text-dark);
-  }
-  :root.light .topbar { border-bottom-color: var(--border-light); }
-  :root.light .card { background: var(--card-light); border-color: var(--border-light); }
-  :root.light .ms.muted, :root.light .greeting-text .subtitle, :root.light .res-sub { color: #8A94A6; }
   

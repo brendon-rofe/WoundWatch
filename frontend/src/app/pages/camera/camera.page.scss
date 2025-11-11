@@ -1,14 +1,6 @@
 .add-photo-page {
-    --bg: #1A1A1A;
-    --card: #2C2C2E;
-    --text-primary: #F2F2F7;
-    --text-secondary: #92adc9;
-    --destructive: #FF453A;
-    --border: rgba(255,255,255,.1);
-    --border-dash: rgba(255,255,255,.2);
-  
-    --ion-background-color: var(--bg);
-    color: var(--text-primary);
+    --ion-background-color: var(--ww-bg);
+    color: var(--ww-text-primary);
     font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   }
   
@@ -22,8 +14,8 @@
   .card {
     width: 100%;
     max-width: 720px;
-    background: var(--card);
-    border: 1px solid var(--border);
+    background: var(--ww-surface);
+    border: 1px solid var(--ww-border);
     border-radius: 12px;
     box-shadow: 0 24px 64px rgba(0,0,0,.5);
     display: flex;
@@ -33,7 +25,7 @@
   /* Header */
   .card-header {
     padding: 24px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--ww-border);
   }
   .title {
     margin: 0 0 4px;
@@ -44,14 +36,14 @@
   .subtitle {
     margin: 0;
     font-size: 14px;
-    color: var(--text-secondary);
+    color: var(--ww-text-secondary);
   }
   
   /* Segmented */
   .segmented-wrap { padding: 16px; }
   .segmented {
     height: 40px;
-    background: var(--bg);
+    background: var(--ww-bg);
     border-radius: 10px;
     padding: 4px;
     display: flex;
@@ -61,7 +53,7 @@
     flex: 1;
     display: grid;
     place-items: center;
-    color: var(--text-secondary);
+    color: var(--ww-text-secondary);
     font-size: 14px;
     font-weight: 600;
     border-radius: 8px;
@@ -71,7 +63,7 @@
     position: relative;
   }
   .seg-item input { position: absolute; inset: 0; width: 0; height: 0; opacity: 0; }
-  .seg-item.active { background: rgba(255,255,255,.08); color: var(--text-primary); }
+  .seg-item.active { background: color-mix(in srgb, var(--ww-text-secondary) 12%, transparent); color: var(--ww-text-primary); }
   
   /* Preview */
   .preview-wrap { padding: 24px 16px; }
@@ -81,8 +73,8 @@
     margin: 0 auto;
     aspect-ratio: 16 / 9;
     border-radius: 12px;
-    border: 1px dashed var(--border-dash);
-    background: var(--bg);
+    border: 1px dashed var(--ww-border);
+    background: var(--ww-bg);
     position: relative;
     overflow: hidden;
   }
@@ -98,7 +90,7 @@
     font-weight: 800;
     letter-spacing: .02em;
     text-transform: none;
-    color: var(--text-primary);
+    color: var(--ww-text-primary);
     animation: capFade .25s ease-out;
   
     .ms { font-size: 28px; opacity: 0.9; }
@@ -134,20 +126,20 @@
   .shutter {
     width: 64px; height: 64px;
     border-radius: 999px;
-    border: 4px solid rgba(255,255,255,.2);
-    background: var(--bg);
-    box-shadow: 0 0 0 4px var(--bg);
+    border: 4px solid color-mix(in srgb, var(--ww-text-secondary) 20%, transparent);
+    background: var(--ww-bg);
+    box-shadow: 0 0 0 4px var(--ww-bg);
     display: grid; place-items: center;
   }
   .shutter .inner {
     width: 48px; height: 48px;
     border-radius: 999px;
-    background: var(--destructive);
+    background: #FF453A;
   }
   
   .meta {
     text-align: center;
-    color: var(--text-secondary);
+    color: var(--ww-text-secondary);
     font-size: 12px;
     margin: 4px 0 16px;
   }
@@ -157,8 +149,8 @@
     display: flex;
     gap: 12px;
     padding: 16px;
-    border-top: 1px solid var(--border);
-    background: rgba(0,0,0,.2);
+    border-top: 1px solid var(--ww-border);
+    background: color-mix(in srgb, var(--ww-text-secondary) 12%, transparent);
     border-radius: 0 0 12px 12px;
     justify-content: flex-end;
     flex-wrap: wrap;
@@ -181,6 +173,6 @@
     font-weight: 800; font-size: 14px; letter-spacing: .02em;
     cursor: pointer; border: none;
   }
-  .btn.ghost { background: rgba(255,255,255,.1); color: var(--text-primary); }
-  .btn.ghost:hover { background: rgba(255,255,255,.2); }
+  .btn.ghost { background: color-mix(in srgb, var(--ww-text-secondary) 12%, transparent); color: var(--ww-text-primary); }
+  .btn.ghost:hover { background: color-mix(in srgb, var(--ww-text-secondary) 20%, transparent); }
   

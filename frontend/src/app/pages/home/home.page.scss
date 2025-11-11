@@ -1,18 +1,7 @@
-/* Theme variables (works with Ionic dark mode or your own toggle) */
-:host {
-  --ww-primary: #137fec;
-  --ww-bg-light: #f6f7f8;
-  --ww-bg-dark: #101922;
-  --ww-text: #ffffff;
-  --ww-text-dim: rgba(255,255,255,0.6);
-  --ww-border: rgba(255,255,255,0.1);
-  --ww-radius: 12px;
-}
-
+/* Use global theme tokens defined in :root/.dark */
 .ww-root {
-  /* background */
-  --ion-background-color: var(--ww-bg-dark);
-  color: var(--ww-text);
+  --ion-background-color: var(--ww-bg);
+  color: var(--ww-text-primary);
   font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
 
@@ -51,7 +40,7 @@
   font-weight: 700;
   letter-spacing: -0.015em;
   font-size: 18px;
-  color: var(--ww-text);
+  color: var(--ww-text-primary);
 }
 
 .actions {
@@ -64,8 +53,8 @@
   height: 40px;
   padding: 0 10px;
   border-radius: 8px;
-  background: rgba(255,255,255,0.1);
-  color: var(--ww-text);
+  background: color-mix(in srgb, var(--ww-text-secondary) 12%, transparent);
+  color: var(--ww-text-primary);
   border: none;
   display: inline-flex;
   align-items: center;
@@ -104,7 +93,7 @@
 }
 .heading p {
   margin: 0;
-  color: var(--ww-text-dim);
+  color: var(--ww-text-secondary);
   font-size: 16px;
 }
 
@@ -146,7 +135,7 @@
 }
 .card-subtitle {
   font-size: 14px;
-  color: var(--ww-text-dim);
+  color: var(--ww-text-secondary);
   margin: 0;
 }
 
@@ -165,15 +154,12 @@
   margin-bottom: 12px;
 }
 .footer a {
-  color: var(--ww-text-dim);
+  color: var(--ww-text-secondary);
   text-decoration: none;
 }
-.footer a:hover { color: var(--ww-text); }
+.footer a:hover { color: var(--ww-text-primary); }
 .copyright {
-  color: var(--ww-text-dim);
+  color: var(--ww-text-secondary);
   font-size: 14px;
   margin: 0;
 }
-
-/* Optional light mode (if you want to support it quickly) */
-:root.light .ww-root { --ion-background-color: var(--ww-bg-light); }

@@ -1,2 +1,27 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+/* Bridge Ionic theme variables to global tokens */
+:root {
+  /* Primary */
+  --ion-color-primary: var(--ww-primary);
+  --ion-color-primary-rgb: 19, 127, 236;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #1172d4;
+  --ion-color-primary-tint: #3693ee;
+
+  /* Background and text */
+  --ion-background-color: var(--ww-bg);
+  --ion-text-color: var(--ww-text-primary);
+
+  /* Optional neutrals mapped from tokens */
+  --ion-color-medium: var(--ww-text-secondary);
+}
+
+.dark {
+  --ion-color-primary: var(--ww-primary);
+  --ion-background-color: var(--ww-bg);
+  --ion-text-color: var(--ww-text-primary);
+  --ion-color-medium: var(--ww-text-secondary);
+}
