@@ -7,3 +7,9 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Image {
+  id         Int      @id @default(autoincrement())
+  filePath   String
+  createdAt  DateTime @default(now())
+}
