@@ -2,7 +2,6 @@ import express from "express";
 import type { Request } from "express";
 import crypto from "node:crypto";
 import multer from "multer";
-import type { Multer } from "multer";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { getS3Client, s3Config } from "./s3";
 
