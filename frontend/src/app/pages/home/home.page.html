@@ -1,4 +1,10 @@
 <ion-content [fullscreen]="true" class="ww-root">
+  @if (showReminder) {
+    <app-image-reminder-popup 
+      (dismiss)="onReminderDismissed()">
+    </app-image-reminder-popup>
+  }
+  
   <div class="app-shell">
     <!-- Top bar -->
     <header class="topbar">

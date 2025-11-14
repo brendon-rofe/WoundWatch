@@ -1,0 +1,161 @@
+:host {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.reminder-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 16px;
+  animation: fadeIn 0.2s ease-out;
+  pointer-events: all;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.reminder-popup {
+  background: var(--ion-background-color, #ffffff);
+  border-radius: var(--ww-radius, 16px);
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: slideUp 0.3s ease-out;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ww-text-secondary, #666) 12%, transparent);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+  color: var(--ww-text-primary, #000);
+  transition: background 0.2s ease;
+}
+
+.close-btn:hover {
+  background: color-mix(in srgb, var(--ww-text-secondary, #666) 20%, transparent);
+}
+
+.close-btn ion-icon {
+  font-size: 20px;
+}
+
+.reminder-content {
+  padding: 32px 24px 24px;
+  text-align: center;
+}
+
+.reminder-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ww-primary, #3880ff) 15%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ww-primary, #3880ff);
+}
+
+.reminder-icon ion-icon {
+  font-size: 32px;
+}
+
+.reminder-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: var(--ww-text-primary, #000);
+  letter-spacing: -0.02em;
+}
+
+.reminder-message {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ww-text-secondary, #666);
+  margin: 0 0 24px;
+}
+
+.reminder-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.primary-btn {
+  --background: var(--ww-primary, #3880ff);
+  --color: white;
+  --border-radius: 12px;
+  --padding-top: 14px;
+  --padding-bottom: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.dismiss-btn {
+  --color: var(--ww-text-secondary, #666);
+  font-weight: 500;
+  margin: 0;
+}
+
+// Dark mode support
+:host-context(.ion-palette-dark) {
+  .reminder-popup {
+    background: var(--ion-background-color, #1a1a1a);
+  }
+  
+  .reminder-title {
+    color: var(--ww-text-primary, #ffffff);
+  }
+  
+  .reminder-message {
+    color: var(--ww-text-secondary, #999);
+  }
+  
+  .close-btn {
+    color: var(--ww-text-primary, #ffffff);
+  }
+}
+

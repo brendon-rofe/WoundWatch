@@ -1,0 +1,38 @@
+<div class="reminder-overlay" (click)="onDismiss()">
+  <div class="reminder-popup" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="onDismiss()" aria-label="Close reminder">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    
+    <div class="reminder-content">
+      <div class="reminder-icon">
+        <ion-icon name="camera"></ion-icon>
+      </div>
+      
+      <h2 class="reminder-title">Time for Your Daily Check-in</h2>
+      
+      <p class="reminder-message">
+        You haven't taken a photo today. Regular monitoring helps track your healing progress.
+      </p>
+      
+      <div class="reminder-actions">
+        <ion-button 
+          expand="block" 
+          class="primary-btn"
+          (click)="navigateToCamera()">
+          <ion-icon name="camera" slot="start"></ion-icon>
+          Take Photo Now
+        </ion-button>
+        
+        <ion-button 
+          expand="block" 
+          fill="clear" 
+          class="dismiss-btn"
+          (click)="onDismiss()">
+          Remind Me Later
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</div>
+
