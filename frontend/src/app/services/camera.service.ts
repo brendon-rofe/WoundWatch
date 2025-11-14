@@ -126,7 +126,27 @@ export class CameraService {
     const raw = localStorage.getItem('saved_photos') ?? '[]';
     const list = JSON.parse(raw) as PhotoEntry[];
     list.unshift(entry);
-    localStorage.setItem('saved_photos', JSON.stringify(list.slice(0, 200)));
+    
+    // Keep only the 5 most recent images
+    const MAX_IMAGES = 5;
+    const trimmedList = list.slice(0, MAX_IMAGES);
+    
+    // Delete old images from filesystem if they exceed the limit
+    if (list.length > MAX_IMAGES) {
+      const imagesToDelete = list.slice(MAX_IMAGES);
+      for (const oldEntry of imagesToDelete) {
+        try {
+          await Filesystem.deleteFile({
+            path: oldEntry.path,
+            directory: Directory.Data,
+          });
+        } catch (e) {
+          console.warn(`Failed to delete old image ${oldEntry.path}:`, e);
+        }
+      }
+    }
+    
+    localStorage.setItem('saved_photos', JSON.stringify(trimmedList));
     return entry;
   }
 
