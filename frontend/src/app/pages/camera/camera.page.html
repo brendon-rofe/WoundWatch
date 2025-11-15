@@ -68,7 +68,35 @@
         }
   
         <p class="meta">Supported formats: JPG, PNG. Max size: 10MB.</p>
-  
+        
+        <!-- Note section -->
+        <section class="note-wrap" aria-labelledby="note-title">
+          <div class="note-header">
+            <h3 id="note-title">Add a note (optional)</h3>
+            <p class="note-sub">Record pain level, dressing changes, meds, or anything notable today.</p>
+          </div>
+
+          <div class="note-field">
+            <label for="ww-note" class="visually-hidden">Wound note</label>
+            <textarea
+              id="ww-note"
+              [value]="note"
+              (input)="onNoteInput($event)"
+              placeholder="Eg: Changed dressing at 9am. Mild redness around edges, pain 3/10."
+              [attr.maxlength]="maxNoteLen"
+              rows="4"
+              aria-describedby="note-counter">
+            </textarea>
+
+            <div class="note-meta">
+              <span id="note-counter"
+                    [class.warn]="note.length > maxNoteLen - 40">
+                {{ note.length }}/{{ maxNoteLen }}
+              </span>
+            </div>
+          </div>
+        </section>
+
         <!-- Actions -->
         <div class="actions">
           <button class="btn ghost" (click)="close()"><span>Cancel</span></button>

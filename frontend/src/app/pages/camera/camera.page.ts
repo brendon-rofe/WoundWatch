@@ -18,6 +18,13 @@ export class CameraPage implements OnInit, AfterViewInit, OnDestroy {
   captured = false;
   saving = false;
   uploadPreview: string | null = null;
+  note = '';
+  maxNoteLen = 280;
+
+  onNoteInput(ev: Event) {
+    const value = (ev.target as HTMLTextAreaElement).value ?? '';
+    this.note = value.slice(0, this.maxNoteLen);
+  }
 
   @ViewChild('webcam') webcamRef?: ElementRef<HTMLVideoElement>;
   private cleanupReflow?: () => void;

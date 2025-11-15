@@ -176,3 +176,71 @@
   .btn.ghost { background: color-mix(in srgb, var(--ww-text-secondary) 12%, transparent); color: var(--ww-text-primary); }
   .btn.ghost:hover { background: color-mix(in srgb, var(--ww-text-secondary) 20%, transparent); }
   
+/* Note section */
+.note-wrap {
+  padding: 0 16px 8px;
+}
+
+.note-header {
+  padding: 0 8px 8px;
+}
+.note-header h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--ww-text-primary, var(--ww-text, #111));
+}
+.note-sub {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ww-text-secondary);
+}
+
+.note-field {
+  margin-top: 8px;
+  background: var(--ww-surface);
+  border: 1px solid var(--ww-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.note-field textarea {
+  width: 100%;
+  display: block;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--ww-text-primary, var(--ww-text, #111));
+  background: transparent;
+  border: none;
+  resize: vertical;
+  min-height: 96px;
+  outline: none;
+}
+
+.note-field textarea::placeholder {
+  color: var(--ww-text-secondary);
+  opacity: 0.9;
+}
+
+.note-meta {
+  display: flex;
+  justify-content: flex-end;
+  padding: 6px 10px 10px;
+}
+.note-meta span {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ww-text-secondary);
+}
+.note-meta span.warn {
+  color: #ff9f0a; /* subtle warn near limit */
+}
+
+/* a11y helper */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden; clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
