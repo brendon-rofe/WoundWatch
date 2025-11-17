@@ -6,6 +6,7 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor } from '@capacitor/core';
 import { addIcons } from 'ionicons';
 import { trashBin } from 'ionicons/icons';
+import { CameraService } from '../../services/camera.service';
 
 type GalleryIndexItem = { uri: string; path: string; ts: number };
 type DayItem = {
@@ -15,6 +16,7 @@ type DayItem = {
   src: string | null;
   alt: string;
   path?: string;
+  note?: string;
 };
 
 @Component({
@@ -28,8 +30,8 @@ export class WoundProgressPage implements OnInit {
   days: DayItem[] = [];
   selected!: DayItem;
 
-  constructor() {
-    addIcons({ trashBin })
+  constructor(private cameraService: CameraService) {
+    addIcons({ trashBin });
   }
 
   async ngOnInit() {
@@ -137,6 +139,7 @@ export class WoundProgressPage implements OnInit {
       index.map(async (it) => {
         const date = new Date(it.ts);
         const src = await this.resolveSrc(it);
+        const note = this.cameraService.getNote(it.path) ?? undefined;
         return <DayItem>{
           date: date.toISOString().slice(0, 10),
           label: this.fmtLabel(date),
@@ -144,6 +147,7 @@ export class WoundProgressPage implements OnInit {
           src,
           alt: `Wound on ${date.toDateString()}`,
           path: it.path,
+          note,
         };
       })
     );

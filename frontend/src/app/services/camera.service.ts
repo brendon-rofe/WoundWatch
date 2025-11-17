@@ -150,6 +150,18 @@ export class CameraService {
     return entry;
   }
 
+  saveNote(photoPath: string, note: string): void {
+    if (!photoPath || !note) return;
+    const key = `note_${photoPath}`;
+    localStorage.setItem(key, note);
+  }
+
+  getNote(photoPath: string): string | null {
+    if (!photoPath) return null;
+    const key = `note_${photoPath}`;
+    return localStorage.getItem(key);
+  }
+
   hasPhotoToday(): boolean {
     const raw = localStorage.getItem('saved_photos');
     if (!raw) return false;

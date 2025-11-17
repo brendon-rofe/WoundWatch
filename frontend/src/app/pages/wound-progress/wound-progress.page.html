@@ -27,6 +27,14 @@
         
               <div class="badge">{{ selected.badge }}</div>
             </div>
+    
+            <!-- Note section -->
+            @if (selected.note) {
+              <div class="note-display">
+                <h3 class="note-title">Note for {{ selected.label }}</h3>
+                <p class="note-body">{{ selected.note }}</p>
+              </div>
+            }
           </div>
         } @else {
           <div class="main-wrap">

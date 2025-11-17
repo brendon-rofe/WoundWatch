@@ -129,6 +129,10 @@ export class CameraPage implements OnInit, AfterViewInit, OnDestroy {
       }
 
       const entry = await this.cameraService.savePhoto(dataUrl);
+      if (this.note) {
+        this.cameraService.saveNote(entry.path, this.note);
+      }
+
       console.log('Saved to:', entry);
       this.captured = true;
     } catch (e) {
