@@ -29,12 +29,25 @@
             </div>
     
             <!-- Note section -->
-            @if (selected.note) {
-              <div class="note-display">
-                <h3 class="note-title">Note for {{ selected.label }}</h3>
-                <p class="note-body">{{ selected.note }}</p>
-              </div>
-            }
+            <div class="note-wrapper">
+              @if (selected.note) {
+                <div class="note-display">
+                  <h3 class="note-title">
+                    <span class="ms">description</span>
+                    Note for {{ selected.label }}
+                  </h3>
+                  <p class="note-body">{{ selected.note }}</p>
+                </div>
+              } @else {
+                @if (selected.src) {
+                  <div class="note-display note-empty">
+                    <span class="ms">description</span>
+                    <p class="note-title">No Note</p>
+                    <p class="note-body">There is no note recorded for this day.</p>
+                  </div>
+                }
+              }
+            </div>
           </div>
         } @else {
           <div class="main-wrap">

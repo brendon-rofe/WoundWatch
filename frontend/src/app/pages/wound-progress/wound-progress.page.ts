@@ -28,7 +28,7 @@ type DayItem = {
 })
 export class WoundProgressPage implements OnInit {
   days: DayItem[] = [];
-  selected!: DayItem;
+  selected: DayItem | null = null;
 
   constructor(private cameraService: CameraService) {
     addIcons({ trashBin });
@@ -69,7 +69,9 @@ export class WoundProgressPage implements OnInit {
     const ok = await this.deleteFromFilesystem(d.path);
     if (ok) {
       // If we just removed the selected item, clear selection before reload
-      if (this.selected?.path === d.path) this.selected = undefined as any;
+      if (this.selected && this.selected.path === d.path) {
+        this.selected = null;
+      }
       await this.loadSavedPhotos();
     }
   }
@@ -165,10 +167,16 @@ export class WoundProgressPage implements OnInit {
     }
 
     this.days = resolved;
-    // default to the newest available item with an image; else first placeholder
-    this.selected = this.days.find(d => !!d.src) ?? this.days[0];
+    
+    // Default to the newest available item with an image
+    const firstAvailable = this.days.find(d => !!d.src);
+    this.selected = firstAvailable ?? null;
   }
 
-  select(d: DayItem) { if (d.src) this.selected = d; }
+  select(d: DayItem) {
+    if (d.src) {
+      this.selected = d;
+    }
+  }
   trackByDate = (_: number, d: DayItem) => d.date;
 }
