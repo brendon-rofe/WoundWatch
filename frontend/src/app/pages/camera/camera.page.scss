@@ -244,3 +244,24 @@
   overflow: hidden; clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap;
 }
+
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+ion-chip {
+  border-radius: 8px;
+  background: #f0f0f0;
+  color: #333;
+  padding: 6px 12px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+ion-chip.selected {
+  background: var(--ion-color-primary, #3880ff);
+  color: #fff;
+  font-weight: 600;
+}

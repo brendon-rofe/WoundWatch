@@ -5,13 +5,14 @@ import { Router, RouterLink } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { checkmarkCircle } from 'ionicons/icons';
 import { CameraService } from '../../services/camera.service';
+import { IonChip } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-camera',
   templateUrl: './camera.page.html',
   styleUrls: ['./camera.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, IonIcon, RouterLink],
+  imports: [IonContent, CommonModule, IonIcon, RouterLink, IonChip],
 })
 export class CameraPage implements OnInit, AfterViewInit, OnDestroy {
   mode: 'camera' | 'upload' = 'camera';
@@ -20,10 +21,16 @@ export class CameraPage implements OnInit, AfterViewInit, OnDestroy {
   uploadPreview: string | null = null;
   note = '';
   maxNoteLen = 280;
+  woundTypes = ['Burn', 'Cut', 'Scrape', 'Other'];
+  selectedWoundType = this.woundTypes[0];
 
   onNoteInput(ev: Event) {
     const value = (ev.target as HTMLTextAreaElement).value ?? '';
     this.note = value.slice(0, this.maxNoteLen);
+  }
+
+  selectWoundType(type: string) {
+    this.selectedWoundType = type;
   }
 
   @ViewChild('webcam') webcamRef?: ElementRef<HTMLVideoElement>;
@@ -131,6 +138,9 @@ export class CameraPage implements OnInit, AfterViewInit, OnDestroy {
       const entry = await this.cameraService.savePhoto(dataUrl);
       if (this.note) {
         this.cameraService.saveNote(entry.path, this.note);
+      }
+      if (this.selectedWoundType) {
+        this.cameraService.saveWoundType(entry.path, this.selectedWoundType);
       }
 
       console.log('Saved to:', entry);

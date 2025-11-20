@@ -156,6 +156,18 @@ export class CameraService {
     localStorage.setItem(key, note);
   }
 
+  saveWoundType(photoPath: string, woundType: string): void {
+    if (!photoPath || !woundType) return;
+    const key = `wound_type_${photoPath}`;
+    localStorage.setItem(key, woundType);
+  }
+
+  getWoundType(photoPath: string): string | null {
+    if (!photoPath) return null;
+    const key = `wound_type_${photoPath}`;
+    return localStorage.getItem(key);
+  }
+
   getNote(photoPath: string): string | null {
     if (!photoPath) return null;
     const key = `note_${photoPath}`;

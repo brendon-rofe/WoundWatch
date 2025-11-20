@@ -68,6 +68,22 @@
         }
   
         <p class="meta">Supported formats: JPG, PNG. Max size: 10MB.</p>
+
+        <!-- Wound Type -->
+        <section class="note-wrap" aria-labelledby="wound-type-title">
+          <div class="note-header">
+            <h3 id="wound-type-title">Select wound type</h3>
+          </div>
+          <div class="chips-container">
+            @for (type of woundTypes; track type) {
+              <ion-chip
+                [class.selected]="type === selectedWoundType"
+                (click)="selectWoundType(type)">
+                {{ type }}
+              </ion-chip>
+            }
+          </div>
+        </section>
         
         <!-- Note section -->
         <section class="note-wrap" aria-labelledby="note-title">
